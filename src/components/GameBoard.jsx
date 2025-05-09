@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import ErrorMessage from './ErrorMessage/ErrorMessage';
 
 
-const initialGameBoard = [
+const initialGameBoard = [ // Matriz de nulos
   [null, null, null],
   [null, null, null],
   [null, null, null],
@@ -23,14 +22,20 @@ const winningCombinations = [
 ];
 
 
-export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
-  const [gameBoard, setGameBoard] = useState(initialGameBoard);
-  const [error, setError] = useState(''); //Para manejar el error
+// Recibe la funcion que se ejecuta cuando clickeo en una celda, y un arreglo de turnos (los ya clickeados)
+export default function GameBoard({ onSelectSquare, turnosYaClickeados }) {
+  let gameBoard = initialGameBoard;
   const [winner, setWinner] = useState(null); // Para manejar el ganador
 
+  //Cada vez que el componente se renderiza se ejecuta este for, que hace que los casilleros se completen
+  for (const turn of turnosYaClickeados) {
+    const { square, player } = turn;
+    const { row, column } = square;
+    gameBoard[row][column] = player;
+  } 
 
-  function handleSelectSquare(rowIndex, colIndex) {
-    if (gameBoard[rowIndex][colIndex] || winner) {
+  /*function handleSelectSquare(rowIndex, colIndex) {
+    if (gameBoard[rowIndex][colIndex]) {
       setError('Esta casilla ya está ocupada');
       setTimeout(() => { //Para mostrar el cartel de error durante 2 seg
         setError('');
@@ -50,10 +55,10 @@ export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
     }
 
     onSelectSquare();
-  }
+  }*/
 
 
-  function checkWinner(board) {
+  /*function checkWinner(board) {
     for (const combination of winningCombinations) {
       const [a, b, c] = combination;
       const first = board[a[0]][a[1]];
@@ -66,22 +71,24 @@ export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
     }
   
     return null; // Nadie ganó
-  }
+  }*/
 
 
 
 
   return (
     <>
-      {error && <ErrorMessage>{error}</ErrorMessage>}
-      {winner && <div className="winner-message">¡{winner} ganó!</div>}
+      {winner && <div>¡{winner} ganó!</div>}
       <ol id="game-board">
         {gameBoard.map((row, rowIndex) => (
           <li key={rowIndex}>
             <ol>
               {row.map((playerSymbol, colIndex) => (
                 <li key={colIndex}>
-                  <button onClick={() => handleSelectSquare(rowIndex, colIndex)}>{playerSymbol}</button>
+                  <button 
+                    onClick={() => onSelectSquare(rowIndex, colIndex)} 
+                    disabled={playerSymbol !== null} // deshabilito el btn si el casillero tiene un símbolo distinto de nulo
+                  > {playerSymbol} </button>
                 </li>
               ))}
             </ol>
