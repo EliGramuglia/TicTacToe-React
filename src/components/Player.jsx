@@ -2,7 +2,7 @@ import { useState } from 'react'; //Hook useState de React (para manejar estados
 import ErrorMessage from './ErrorMessage/ErrorMessage';
 
 
-export default function Player({ initialName = 'Please edit me!', symbol, isActive }) {
+export default function Player({ initialName = 'Please edit me!', symbol, isActive, onNameChange }) {
   // Crea un estado local playerName y su función para actualizarlo setPlayerName
   // El valor inicial es el que vino como initialName por parametro
   const [playerName, setPlayerName] = useState(initialName);
@@ -15,18 +15,19 @@ export default function Player({ initialName = 'Please edit me!', symbol, isActi
     if (isEditing) {
       if (playerName.trim() === '') { //trim() elimina los espacios
         setError(errorMessage);
-
         setTimeout(() => { //Borrar el error después de 2 segundos
           setError('');
         }, 2000);
-        
         return;
-      } else {
-        setError(''); //Limpia el input al entrar en edición
+      } 
+      if(onNameChange) {
+        onNameChange(symbol, playerName.trim());
       }
-    } else {
+    }
+    else {
       setPlayerName('');
     }
+    
     setIsEditing((actual) => !actual); // No seteo directamente el estado que ya tengo, si no que creo uno nuevo, no hago setIsEditing(!isEditing)
   }
 
