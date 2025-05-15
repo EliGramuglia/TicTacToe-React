@@ -11,14 +11,14 @@ export default function GameHistory( {historial} ) {
                     </tr>
                 </thead>
                  <tbody>
-            {historial.map((partida, index) => (
-            <tr key={index}>
-              <td>{partida.jugadores}</td>
-              <td>{partida.resultado}</td>
-              <td>{index + 1}</td>
-            </tr>
-          ))}
-        </tbody>
+                    {historial.map((partida, index) => (
+                    <tr key={index}>
+                    <td>{partida.jugadores}</td>
+                    <td>{partida.resultado}</td>
+                    <td>{index + 1}</td>
+                    </tr>
+                ))}
+                </tbody>
             </table>
         </div>
     )

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Player from './components/Player.jsx';
 import GameBoard from './components/GameBoard.jsx';
 import GameHistory from './components/GameHistory/GameHistory.jsx';
@@ -66,7 +66,7 @@ function chequearSiHayGanador(gameBoard, players) {
         firstSquareSymbol === secondSquareSymbol &&
         firstSquareSymbol === thirdSquareSymbol
       ) {
-        winner = players[firstSquareSymbol];
+        winner = `${players[firstSquareSymbol]} (${firstSquareSymbol})`;
       }
     }
   
@@ -80,13 +80,26 @@ function App() {
   // Variables de estado: useState
   const [gameTurns, setGameTurns] = useState([]); // Esta variable de estado va a almacenar objetitos json en un array, que guarden las coordenadas del tablero clickeado y el jugador que hizo la jugada.
   const [players, setPlayers] = useState(jugadores);
-  const [historial, setHistorial] = useState([]);
   
   // Variables derivadas:
   const activePlayer = cambiarJugadorActivo(gameTurns);
   const gameBoard = cargarTableroActual(gameTurns);
   const ganador = chequearSiHayGanador(gameBoard, players);
   const hayEmpate = gameTurns.length === cantCeldas && !ganador;
+
+  // Variable que usa LocalStorage
+  const [historial, setHistorial] = useState(() => {
+  const guardado = localStorage.getItem('historial');
+  try {
+    return guardado ? JSON.parse(guardado) : [];
+  } catch {
+    return [];
+  }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('historial', JSON.stringify(historial));
+  }, [historial]);
   
 
   // Funcioón que agrega una jugada
@@ -119,12 +132,12 @@ function App() {
 
   // Función para guardar la nueva partida finalizada
   function guardarHistorial(){
-    const resultado = ganador ? `Ganó ${players[ganador]} (${ganador})` : 'Empate'; // players={X: "Juan", O: "Pepe"}  ganador=O -->  players[O] = "Pepe"
+    const resultado = ganador ? `Ganó ${ganador}` : 'Empate';
 
     setHistorial(partidasPrevias => [
     ...partidasPrevias,
       {
-        jugadores: `${players.X} vs, ${players.O}`,
+        jugadores: `${players.X} vs ${players.O}`,
         resultado: resultado
       }
     ]);
@@ -148,6 +161,13 @@ function App() {
   });*/
 
 
+  // Función para limpiar el historial tanto en el estado como en localStorage
+  function handleResetHistorial() {
+    setHistorial([]); // vaciamos el estado
+    localStorage.removeItem('historial'); // borramos el localStorage
+  }
+
+
 
   return (
     <main>
@@ -162,6 +182,7 @@ function App() {
         <GameBoard onSelectSquare = {handleSelectSquare} board={gameBoard} />
       </div>
       <GameHistory historial={historial} />
+      <button className='#game-over' onClick={handleResetHistorial}>Borrar historial</button>
     </main>
   );
 }
