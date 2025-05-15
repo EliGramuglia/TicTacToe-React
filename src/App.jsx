@@ -29,7 +29,7 @@ function cambiarJugadorActivo(turnosPrevios){
 
   if(turnosPrevios.length > 0 && turnosPrevios[0].player === 'X') { // si ya hay algo en el arr, y si el último que jugó fue X..
         juagdorActual = 'O'; // cambio el actual jugador, le toca a O
-      }
+  }
 
   return juagdorActual;
 }
@@ -41,8 +41,8 @@ function cargarTableroActual(turnosYaClickeados){
 
   //Cada vez que el componente se renderiza se ejecuta este for, que hace que los casilleros se completen
   for (const turn of turnosYaClickeados) {
-    const { square, player } = turn;
-    const { row, column } = square;
+    const { square, player } = turn; // const square = turn.square; const player = turn.player;
+    const { row, column } = square; 
     gameBoard[row][column] = player;
   } 
 
@@ -80,6 +80,7 @@ function App() {
   // Variables de estado: useState
   const [gameTurns, setGameTurns] = useState([]); // Esta variable de estado va a almacenar objetitos json en un array, que guarden las coordenadas del tablero clickeado y el jugador que hizo la jugada.
   const [players, setPlayers] = useState(jugadores);
+  const [historial, setHistorial] = useState([]);
   
   // Variables derivadas:
   const activePlayer = cambiarJugadorActivo(gameTurns);
@@ -88,6 +89,7 @@ function App() {
   const hayEmpate = gameTurns.length === cantCeldas && !ganador;
   
 
+  // Funcioón que agrega una jugada
   function handleSelectSquare(filaIndex, columIndex) {
     // Creo una función anónima para crear un nuevo estado en base al anterior (un nuevo array)
     setGameTurns((turnosPrevios) => { // recibe un arreglo (turnoPrevios[])
@@ -108,9 +110,24 @@ function App() {
     })
   }
 
+
   // Función para resetear la partida
   function handleRestart(){
+    guardarHistorial();
     setGameTurns([]);
+  }
+
+  // Función para guardar la nueva partida finalizada
+  function guardarHistorial(){
+    const resultado = ganador ? `Ganó ${players[ganador]} (${ganador})` : 'Empate'; // players={X: "Juan", O: "Pepe"}  ganador=O -->  players[O] = "Pepe"
+
+    setHistorial(partidasPrevias => [
+    ...partidasPrevias,
+      {
+        jugadores: `${players.X} vs, ${players.O}`,
+        resultado: resultado
+      }
+    ]);
   }
 
   // Función para cambiar el nombre del jugador
@@ -122,7 +139,13 @@ function App() {
       };
     });
   }
-
+  /*setPlayers(prev => {
+  if (symbol === 'X') {
+    return { ...prev, X: newName };
+  } else if (symbol === 'O') {
+    return { ...prev, O: newName };
+  }
+  });*/
 
 
 
@@ -138,7 +161,7 @@ function App() {
         )}
         <GameBoard onSelectSquare = {handleSelectSquare} board={gameBoard} />
       </div>
-      <GameHistory turnos={gameTurns} />
+      <GameHistory historial={historial} />
     </main>
   );
 }

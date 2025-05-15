@@ -1,17 +1,24 @@
-export default function GameHistory( {gameTurns} ) {
+export default function GameHistory( {historial} ) {
     return(
         <div>
-            <h2>Historial de Partidas</h2>
+            <h2>Histórico</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Ganadores</th>
+                        <th>Jugadores</th>
+                        <th>Resultado</th>
+                        <th>Partidas Jugadas</th>
                     </tr>
                 </thead>
-                <tbody>
-                    
-                </tbody>
+                 <tbody>
+            {historial.map((partida, index) => (
+            <tr key={index}>
+              <td>{partida.jugadores}</td>
+              <td>{partida.resultado}</td>
+              <td>{index + 1}</td>
+            </tr>
+          ))}
+        </tbody>
             </table>
         </div>
     )

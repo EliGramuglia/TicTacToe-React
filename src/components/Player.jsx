@@ -6,7 +6,7 @@ export default function Player({ initialName = 'Please edit me!', symbol, isActi
   // Crea un estado local playerName y su función para actualizarlo setPlayerName
   // El valor inicial es el que vino como initialName por parametro
   const [playerName, setPlayerName] = useState(initialName);
-  const [isEditing, setIsEditing] = useState(false);    // Crea otro estado local y su función para actualizarlo. Comienza en false
+  const [isEditing, setIsEditing] = useState(false);  // Crea otro estado local y su función para actualizarlo. Comienza en false
   
   const [error, setError] = useState('');
   const errorMessage = 'Por favor, ingrese su nombre';
@@ -27,7 +27,7 @@ export default function Player({ initialName = 'Please edit me!', symbol, isActi
     else {
       setPlayerName('');
     }
-    
+
     setIsEditing((actual) => !actual); // No seteo directamente el estado que ya tengo, si no que creo uno nuevo, no hago setIsEditing(!isEditing)
   }
 
