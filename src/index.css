@@ -20,8 +20,8 @@ html {
 body {
   background: radial-gradient(
       circle at top,
-      rgba(241, 210, 70, 0.98),
-      rgba(250, 176, 103, 0.87)
+     rgba(255, 183, 207, 0.95),  
+     rgba(143, 196, 230, 0.9)    
     ),
     url('bg-pattern-dark.png');
   background-repeat: repeat;
@@ -44,17 +44,19 @@ h1 {
   font-family: 'Caprasimo', cursive;
   font-size: 3rem;
   margin: 0 auto 3rem auto;
-  color: #3f3b00;
+  color: #2e3d45;
 }
 
 #game-container {
   max-width: 45rem;
   margin: 3rem auto;
   padding: 2rem;
-  border-radius: 6px;
-  background: linear-gradient(#383624, #282617);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  background: linear-gradient(
+   145deg, #4a5d66, #1f2b31
+  );
   position: relative;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
 }
 
 #players {
@@ -76,20 +78,20 @@ h1 {
 }
 
 #players.highlight-player li.active {
-  border-color: #f6e35a;
+  border-color: #cabde3;
   animation: pulse 2s infinite ease-in-out;
 }
 
 #players.highlight-player li.active .player-name,
 #players.highlight-player li.active .player-symbol {
-  color: #f6e35a;
+  color: #e8d3dc;
 }
 
 #players button {
   width: 3rem;
   border: none;
   background: none;
-  color: #c3ba78;
+  color: #bfaecc;
   font-size: 0.9rem;
   cursor: pointer;
   transition: color 0.2s;
@@ -98,7 +100,7 @@ h1 {
 }
 
 #players button:hover {
-  color: #f8ca31;
+  color: #a8d0db;
 }
 
 .player {
@@ -112,7 +114,7 @@ h1 {
   display: inline-block;
   width: 10rem;
   font-size: 1rem;
-  color: #e1dec7;
+  color: #e8d3dc;
   text-transform: uppercase;
   margin: 0;
   padding: 0.5rem;
@@ -128,7 +130,7 @@ h1 {
   border: none;
   padding: 0.5rem;
   animation: pulse-text 2s infinite;
-  background-color: #46432f;
+  background-color: #dcd0e6;
   text-align: center;
   text-transform: uppercase;
 }
@@ -136,7 +138,7 @@ h1 {
 .player-symbol {
   margin-left: 1rem;
   font-size: 1rem;
-  color: #e1dec7;
+  color: #e8d3dc;
 }
 
 ol {
@@ -152,7 +154,7 @@ ol {
 #pre-game button {
   cursor: pointer;
   background: none;
-  color: #f8c031;
+  color: #e6bbd3;
   border: none;
   font-family: 'Caprasimo', cursive;
   font-size: 4rem;
@@ -183,12 +185,13 @@ ol {
   width: 8rem;
   height: 8rem;
   border: none;
-  background: #aca788;
-  color: #3f3b00;
+  background: #d5c9bd; 
+  color: #28333b;      
   font-size: 5rem;
   cursor: pointer;
   font-family: 'Caprasimo', cursive;
   padding: 1rem;
+  box-shadow: 0 4px 8px rgba(90, 69, 96, 0.15);
 }
 
 #game-over {
@@ -299,13 +302,13 @@ ol {
 
 @keyframes pulse-text {
   0% {
-    color: #e1dec7;
+    color: #e8d3dc; /* rosado pastel */
   }
   50% {
-    color: #9f9d83;
+    color: #cabde3; /* lavanda clara */
   }
   100% {
-    color: #e1dec7;
+    color: #e8d3dc;
   }
 }
 
@@ -323,16 +326,16 @@ ol {
 
 @keyframes pulse {
   0% {
-    border-color: #f6e35a;
-    box-shadow: 0 0 0 0 rgba(246, 227, 90, 0.4);
+    border-color: #cabde3;
+    box-shadow: 0 0 0 0 rgba(202, 189, 227, 0.4);
   }
   50% {
-    border-color: #f8c031;
-    box-shadow: 0 0 0 0.5rem rgba(248, 165, 49, 0);
+    border-color: #a8d0db;
+    box-shadow: 0 0 0 0.5rem rgba(168, 208, 219, 0);
   }
   100% {
-    border-color: #f6e35a;
-    box-shadow: 0 0 0 0 rgba(246, 227, 90, 0);
+    border-color: #cabde3;
+    box-shadow: 0 0 0 0 rgba(202, 189, 227, 0);
   }
 }
 
