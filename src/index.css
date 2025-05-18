@@ -20,8 +20,8 @@ html {
 body {
   background: radial-gradient(
       circle at top,
-     rgba(255, 183, 207, 0.95),  
-     rgba(143, 196, 230, 0.9)    
+     rgba(250, 172, 198, 0.95),  
+     rgba(133, 194, 232, 0.9)    
     ),
     url('bg-pattern-dark.png');
   background-repeat: repeat;
@@ -51,7 +51,7 @@ h1 {
   max-width: 45rem;
   margin: 3rem auto;
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: 8px;
   background: linear-gradient(
    145deg, #4a5d66, #1f2b31
   );
@@ -302,13 +302,13 @@ ol {
 
 @keyframes pulse-text {
   0% {
-    color: #e8d3dc; /* rosado pastel */
+    color: #898793; 
   }
   50% {
-    color: #cabde3; /* lavanda clara */
+    color: #5d5c65; 
   }
   100% {
-    color: #e8d3dc;
+    color: #6b6a73;
   }
 }
 

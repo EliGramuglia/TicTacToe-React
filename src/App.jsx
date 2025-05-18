@@ -24,22 +24,23 @@ const jugadores = { // Objeto para guardar los nombres
 /* Los estados o funciones derivadas son más baratos computacionalmente (estados que se derivan de otros estados).
 Cuando se modifica una variable de estado, React renderiza todo el componente -> para evitar lags, es importante reducir dichas variables */
 
+// Devuelve quién es el jugador activo actual (ya que cambia de turno)
 function cambiarJugadorActivo(turnosPrevios){
-  let juagdorActual = 'X';
+  let jugadorActual = 'X';
 
   if(turnosPrevios.length > 0 && turnosPrevios[0].player === 'X') { // si ya hay algo en el arr, y si el último que jugó fue X..
-        juagdorActual = 'O'; // cambio el actual jugador, le toca a O
+        jugadorActual = 'O'; // cambio el actual jugador, le toca a O
   }
 
-  return juagdorActual;
+  return jugadorActual;
 }
 
 
-//Devuelve un tablero 3x3 actualizado, en base a las jugadas hechas
+// Devuelve un tablero 3x3 actualizado, en base a las jugadas hechas
 function cargarTableroActual(turnosYaClickeados){
   let gameBoard = [...initialGameBoard.map((arr) => [...arr])];
 
-  //Cada vez que el componente se renderiza se ejecuta este for, que hace que los casilleros se completen
+  // Cada vez que el componente se renderiza se ejecuta este for, que hace que los casilleros se completen
   for (const turn of turnosYaClickeados) {
     const { square, player } = turn; // const square = turn.square; const player = turn.player;
     const { row, column } = square; 
@@ -50,23 +51,17 @@ function cargarTableroActual(turnosYaClickeados){
 }
 
 
+// Chequea si hay un ganador y lo devuelve (Pepe (O))
 function chequearSiHayGanador(gameBoard, players) {
    let winner;
   
     for (const combination of WINNING_COMBINATIONS) {
-      const firstSquareSymbol =
-        gameBoard[combination[0].row][combination[0].column];
-      const secondSquareSymbol =
-        gameBoard[combination[1].row][combination[1].column];
-      const thirdSquareSymbol =
-        gameBoard[combination[2].row][combination[2].column];
+      const firstSymbol = gameBoard[combination[0].row][combination[0].column];
+      const secondSymbol = gameBoard[combination[1].row][combination[1].column];
+      const thirdSymbol  = gameBoard[combination[2].row][combination[2].column];
   
-      if (
-        firstSquareSymbol &&
-        firstSquareSymbol === secondSquareSymbol &&
-        firstSquareSymbol === thirdSquareSymbol
-      ) {
-        winner = `${players[firstSquareSymbol]} (${firstSquareSymbol})`;
+      if (firstSymbol && firstSymbol === secondSymbol && firstSymbol === thirdSymbol) {
+        winner = `${players[firstSymbol]} (${firstSymbol})`;
       }
     }
   
@@ -102,10 +97,10 @@ function App() {
   }, [historial]);
   
 
-  // Funcioón que agrega una jugada
+  // Función que agrega una jugada
   function handleSelectSquare(filaIndex, columIndex) {
     // Creo una función anónima para crear un nuevo estado en base al anterior (un nuevo array)
-    setGameTurns((turnosPrevios) => { // recibe un arreglo (turnoPrevios[])
+    setGameTurns((turnosPrevios) => { // recibe un arreglo (turnoPrevios[] -> el valor anterior del estado gameTurns.)
       let currentPlayer = cambiarJugadorActivo(turnosPrevios);
 
       const turnosActualizados = [ // creo un nuevo arreglo, pero con la nueva jugada (que va a estar en la pos[0])
